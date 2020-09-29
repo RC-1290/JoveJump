@@ -10,10 +10,19 @@ namespace CodeAnimo
 		public Camera PlayerCamera;
 
 		private Transform _targetTransform;
+		private Vector3 _spawnPosition;
+		private Quaternion _spawnRotation;
+
+		private void Awake()
+		{
+			_targetTransform = GetComponent<Transform>();
+			_spawnPosition = _targetTransform.position;
+			_spawnRotation = _targetTransform.rotation;
+		}
 
 		private void OnEnable()
 		{
-			_targetTransform = GetComponent<Transform>();
+			_targetTransform.SetPositionAndRotation(_spawnPosition, _spawnRotation);
 		}
 
 		void FixedUpdate()

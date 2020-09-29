@@ -13,12 +13,16 @@ namespace CodeAnimo
 		public float TimeBeforeJump = 0.5f;
 		public Vector2 JumpForce;
 
-		public float _lastTimeAirborne = 0;
+		public float HeightReached = 0;
+
+		private float _lastTimeAirborne = 0;
 		private Rigidbody2D _ownRigidBody;
 
 		private void OnEnable()
 		{
 			_ownRigidBody = GetComponent<Rigidbody2D>();
+			HeightReached = 0;
+			_lastTimeAirborne = 0;
 		}
 
 		private void FixedUpdate()
@@ -27,6 +31,13 @@ namespace CodeAnimo
 			
 			if (hit.collider != null)
 			{
+				float platformHeight = hit.point.y;
+				if (platformHeight > HeightReached)
+				{
+					HeightReached = platformHeight;
+				}
+
+
 				if (Time.fixedTime - _lastTimeAirborne > TimeBeforeJump)
 				{
 					_ownRigidBody.AddForce(JumpForce);

@@ -7,37 +7,26 @@ namespace CodeAnimo
 	{
 		public Camera PlayerCamera;
 		public GameObject Player;
-		public Transform PlayerSpawnPoint;
+
+		public GameObject World;
 
 		private Transform _playerTransform;
+		private Transform _cameraTransform;
 
-		private void OnEnable()
+		private void Awake()
 		{
 			_playerTransform = Player.transform;
-
-			ResetPlayer();
+			_cameraTransform = PlayerCamera.transform;
 		}
 
 		private void FixedUpdate()
 		{
 			if (PlayerCamera.WorldToViewportPoint(_playerTransform.position).y <= 0)
 			{
-				ResetPlayer();
+				World.SetActive(false);
+				World.SetActive(true);
 			}
 		}
-
-		private void ResetPlayer()
-		{
-			Player.SetActive(false);
-			
-			_playerTransform.SetPositionAndRotation(PlayerSpawnPoint.position, PlayerSpawnPoint.rotation);
-			Rigidbody2D playerRigidBody =  Player.GetComponent<Rigidbody2D>();
-			playerRigidBody.angularVelocity = 0;
-			playerRigidBody.velocity = Vector2.zero;
-
-			Player.SetActive(true);
-		}
-
 
 	}
 }
