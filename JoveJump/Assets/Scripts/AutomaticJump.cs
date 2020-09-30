@@ -15,6 +15,8 @@ namespace CodeAnimo
 
 		public float HeightReached = 0;
 
+		public float MaxmimumUpwardsSpeedBeforeLaunch = 0.1f;
+
 		private float _lastTimeAirborne = 0;
 		private Rigidbody2D _ownRigidBody;
 
@@ -28,15 +30,16 @@ namespace CodeAnimo
 		private void FixedUpdate()
 		{
 			RaycastHit2D hit = Physics2D.Raycast(GroundDetectionPoint.position, Vector2.down, MaxGroundDistance, GroundHitLayers.value);
-			
-			if (hit.collider != null)
+
+			bool notGoingUp = _ownRigidBody.velocity.y <= MaxmimumUpwardsSpeedBeforeLaunch;
+
+			if (hit.collider != null && notGoingUp)
 			{
 				float platformHeight = hit.point.y;
 				if (platformHeight > HeightReached)
 				{
 					HeightReached = platformHeight;
 				}
-
 
 				if (Time.fixedTime - _lastTimeAirborne > TimeBeforeJump)
 				{
