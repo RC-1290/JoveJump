@@ -26,16 +26,6 @@ namespace CodeAnimo
 			}
 
 			_nextPlatformHeight = MinimumHeightDifference;
-
-			for(int platformIndex = 0; platformIndex < DesiredPlatformCount; ++platformIndex)
-			{
-				GameObject platform = Instantiate(PlatformPrefab, transform);
-				Platforms.Add(platform);
-
-				PositionPlatform(platform.transform);
-
-				
-			}
 		}
 
 		private void OnDisable()
@@ -50,12 +40,29 @@ namespace CodeAnimo
 
 		private void FixedUpdate()
 		{
+			while (Platforms.Count < DesiredPlatformCount)
+			{
+				GameObject platform = Instantiate(PlatformPrefab, transform);
+				Platforms.Add(platform);
+
+				PositionPlatform(platform.transform);
+			}
+
+
 			for (int platformIndex = 0; platformIndex < Platforms.Count; ++platformIndex)
 			{
 				GameObject platform = Platforms[platformIndex];
 				if (PlayerCamera.WorldToViewportPoint(platform.transform.position).y <= 0)
 				{
-					PositionPlatform(platform.transform);
+					if (Platforms.Count > DesiredPlatformCount)
+					{
+						Platforms.Remove(platform);
+						Destroy(platform);
+					}
+					else
+					{
+						PositionPlatform(platform.transform);
+					}
 				}
 			}
 		}
