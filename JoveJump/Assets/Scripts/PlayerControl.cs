@@ -9,13 +9,20 @@ namespace CodeAnimo
 		public float MoveSpeed = 1;
 		public Camera PlayerCamera;
 
+		public float MoveForce = 100;
+		public Transform ThrusterLeft;
+		public Transform ThrusterRight;
+
 		private Transform _targetTransform;
 		private Vector3 _spawnPosition;
 		private Quaternion _spawnRotation;
 
+		private Rigidbody2D _rigidBody;
+
 		private void Awake()
 		{
 			_targetTransform = GetComponent<Transform>();
+			_rigidBody = GetComponent<Rigidbody2D>();
 			_spawnPosition = _targetTransform.position;
 			_spawnRotation = _targetTransform.rotation;
 		}
@@ -42,7 +49,15 @@ namespace CodeAnimo
 				float averageX = summedX / Input.touchCount;
 				Vector3 originalPos = _targetTransform.position;
 				Vector3 originalScreenPos = PlayerCamera.WorldToScreenPoint(originalPos);
-				_targetTransform.position = PlayerCamera.ScreenToWorldPoint(new Vector3(averageX, originalScreenPos.y, originalScreenPos.z));
+
+				if (averageX > originalScreenPos.x)
+				{
+					_rigidBody.AddForceAtPosition(new Vector2(MoveForce, 0), ThrusterRight.position);
+				}
+				if (averageX < originalScreenPos.x)
+				{
+					_rigidBody.AddForceAtPosition(new Vector2(-MoveForce,0), ThrusterLeft.position);
+				}
 			}
 		}
 	}
