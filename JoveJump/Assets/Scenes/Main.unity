@@ -430,7 +430,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1116820945}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4e11c35974360ab4098d7e6538d1b096, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -530,6 +530,10 @@ MonoBehaviour:
   MoveForce: 10
   ThrusterLeft: {fileID: 1188956184}
   ThrusterRight: {fileID: 4968072}
+  GoLeftKey: 276
+  GoLeftKeySecondary: 97
+  GoRightKey: 275
+  GoRightKeySecondary: 100
 --- !u!50 &1116820951
 Rigidbody2D:
   serializedVersion: 4
@@ -568,7 +572,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   GroundDetectionPoint: {fileID: 1880121898}
-  TimeBeforeJump: 0.1
+  TimeBeforeJump: 0.05
   JumpForce: {x: 0, y: 500}
   HeightReached: 0
 --- !u!1 &1129885357
@@ -797,7 +801,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DesiredPlatformCount: 10
-  MinimumHeightDifference: 1
+  MinimumHeightDifference: 1.5
   MaximumHeightDifference: 3
   PlatformPrefab: {fileID: 3882308744515902583, guid: c3e219cfc29e76b4e9da36653181d416, type: 3}
   PlayerCamera: {fileID: 963194227}
@@ -907,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3882308744515902582, guid: c3e219cfc29e76b4e9da36653181d416, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3882308744515902582, guid: c3e219cfc29e76b4e9da36653181d416, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

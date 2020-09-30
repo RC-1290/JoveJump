@@ -13,6 +13,11 @@ namespace CodeAnimo
 		public Transform ThrusterLeft;
 		public Transform ThrusterRight;
 
+		public KeyCode GoLeftKey = KeyCode.LeftArrow;
+		public KeyCode GoLeftKeySecondary = KeyCode.A;
+		public KeyCode GoRightKey = KeyCode.RightArrow;
+		public KeyCode GoRightKeySecondary = KeyCode.D;
+
 		private Transform _targetTransform;
 		private Vector3 _spawnPosition;
 		private Quaternion _spawnRotation;
@@ -34,6 +39,12 @@ namespace CodeAnimo
 
 		void FixedUpdate()
 		{
+			bool goLeft		= Input.GetKey(GoLeftKey);
+			bool goRight	= Input.GetKey(GoRightKey);
+			goLeft			|= Input.GetKey(GoLeftKeySecondary);
+			goRight			|= Input.GetKey(GoRightKeySecondary);
+
+
 			if (Input.touchCount > 0)
 			{
 				float summedX = 0;
@@ -50,15 +61,20 @@ namespace CodeAnimo
 				Vector3 originalPos = _targetTransform.position;
 				Vector3 originalScreenPos = PlayerCamera.WorldToScreenPoint(originalPos);
 
-				if (averageX > originalScreenPos.x)
-				{
-					_rigidBody.AddForceAtPosition(new Vector2(MoveForce, 0), ThrusterRight.position);
-				}
-				if (averageX < originalScreenPos.x)
-				{
-					_rigidBody.AddForceAtPosition(new Vector2(-MoveForce,0), ThrusterLeft.position);
-				}
+				goRight	|= averageX > originalScreenPos.x;
+				goLeft	|= averageX < originalScreenPos.x;
 			}
+
+
+			if (goRight)
+			{
+				_rigidBody.AddForceAtPosition(new Vector2(MoveForce, 0), ThrusterRight.position);
+			}
+			if (goLeft)
+			{
+				_rigidBody.AddForceAtPosition(new Vector2(-MoveForce,0), ThrusterLeft.position);
+			}
+
 		}
 	}
 }
