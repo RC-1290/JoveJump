@@ -568,12 +568,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxGroundDistance: 0.1
+  MaxmimumUpwardsSpeedBeforeLaunch: 0.1
   GroundHitLayers:
     serializedVersion: 2
     m_Bits: 256
   GroundDetectionPoint: {fileID: 1880121898}
   TimeBeforeJump: 0.05
-  JumpForce: {x: 0, y: 500}
+  JumpForce: {x: 0, y: 200}
+  ThrustDuration: 0.034
   HeightReached: 0
 --- !u!1 &1129885357
 GameObject:
