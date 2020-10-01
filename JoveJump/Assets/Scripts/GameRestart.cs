@@ -9,6 +9,7 @@ namespace CodeAnimo
 		public GameObject Player;
 
 		public GameObject World;
+		public GameObject Countdown;
 
 		private Transform _playerTransform;
 		private Transform _cameraTransform;
@@ -25,6 +26,7 @@ namespace CodeAnimo
 			{
 				World.SetActive(false);
 				World.SetActive(true);
+				Countdown.SetActive(true);
 			}
 		}
 
