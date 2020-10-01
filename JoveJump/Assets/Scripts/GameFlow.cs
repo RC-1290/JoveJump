@@ -3,13 +3,14 @@ using UnityEngine;
 
 namespace CodeAnimo
 {
-	public class GameRestart : MonoBehaviour
+	public class GameFlow : MonoBehaviour
 	{
 		public Camera PlayerCamera;
 		public GameObject Player;
 
 		public GameObject World;
 		public GameObject Countdown;
+		public GameObject GameOverUI;
 
 		private Transform _playerTransform;
 		private Transform _cameraTransform;
@@ -24,10 +25,16 @@ namespace CodeAnimo
 		{
 			if (PlayerCamera.WorldToViewportPoint(_playerTransform.position).y <= 0)
 			{
-				World.SetActive(false);
-				World.SetActive(true);
-				Countdown.SetActive(true);
+				GameOverUI.SetActive(true);
 			}
+		}
+
+		public void OnClickRestart()
+		{
+			World.SetActive(false);
+			GameOverUI.SetActive(false);
+			World.SetActive(true);
+			Countdown.SetActive(true);
 		}
 
 	}
