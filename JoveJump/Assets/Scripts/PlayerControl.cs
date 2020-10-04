@@ -12,6 +12,8 @@ namespace CodeAnimo
 		public float MoveForce = 100;
 		public Transform ThrusterLeft;
 		public Transform ThrusterRight;
+		public ParticleSystem ThrusterEffectLeft;
+		public ParticleSystem ThrusterEffectRight;
 
 		public KeyCode GoLeftKey = KeyCode.LeftArrow;
 		public KeyCode GoLeftKeySecondary = KeyCode.A;
@@ -24,6 +26,9 @@ namespace CodeAnimo
 
 		private Rigidbody2D _rigidBody;
 
+		private ParticleSystem.EmissionModule _thrustLeftEmission;
+		private ParticleSystem.EmissionModule _thrustRightEmission;
+
 		private void Awake()
 		{
 			_targetTransform = GetComponent<Transform>();
@@ -35,6 +40,14 @@ namespace CodeAnimo
 		private void OnEnable()
 		{
 			_targetTransform.SetPositionAndRotation(_spawnPosition, _spawnRotation);
+
+			_thrustLeftEmission = ThrusterEffectLeft.emission;
+			_thrustRightEmission = ThrusterEffectRight.emission;
+
+			_thrustLeftEmission.enabled = false;
+			_thrustRightEmission.enabled = false;
+			ThrusterEffectLeft.Play();
+			ThrusterEffectRight.Play();
 		}
 
 		void FixedUpdate()
@@ -66,6 +79,8 @@ namespace CodeAnimo
 			}
 
 
+			bool includeChildren = true;
+
 			if (goRight)
 			{
 				_rigidBody.AddForceAtPosition(new Vector2(MoveForce, 0), ThrusterRight.position);
@@ -74,6 +89,11 @@ namespace CodeAnimo
 			{
 				_rigidBody.AddForceAtPosition(new Vector2(-MoveForce,0), ThrusterLeft.position);
 			}
+
+			_thrustLeftEmission.enabled = goRight;
+			_thrustRightEmission.enabled = goLeft;
+
+
 
 		}
 	}
