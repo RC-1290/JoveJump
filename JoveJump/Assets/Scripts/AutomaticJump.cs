@@ -10,6 +10,7 @@ namespace CodeAnimo
 		public float MaxmimumUpwardsSpeedBeforeLaunch = 0.1f;
 		public LayerMask GroundHitLayers;
 		public Transform GroundDetectionPoint;
+		public ParticleSystem RocketExhaustEffect;
 
 		public float TimeBeforeJump = 0.5f;
 		public Vector2 JumpForce;
@@ -22,12 +23,18 @@ namespace CodeAnimo
 		private bool _performingThrust = false;
 		private float _thrustStartTime = 0;
 
+		private ParticleSystem.EmissionModule _rocketExhaustEmission;
+
 		private void OnEnable()
 		{
 			_ownRigidBody = GetComponent<Rigidbody2D>();
 			HeightReached = 0;
 			_lastTimeAirborne = 0;
 			_performingThrust = false;
+
+			RocketExhaustEffect.Play(true);
+			_rocketExhaustEmission = RocketExhaustEffect.emission;
+			_rocketExhaustEmission.enabled = false;
 		}
 
 		private void FixedUpdate()
@@ -70,6 +77,9 @@ namespace CodeAnimo
 					_performingThrust = false;
 				}
 			}
+
+			_rocketExhaustEmission.enabled = _performingThrust;
+
 		}
 
 		private void OnDrawGizmosSelected()
