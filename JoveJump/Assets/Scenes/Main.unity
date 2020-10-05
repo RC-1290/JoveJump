@@ -6735,7 +6735,7 @@ MonoBehaviour:
   PlayerCamera: {fileID: 963194227}
   Player: {fileID: 1116820945}
   World: {fileID: 1839605993}
-  Countdown: {fileID: 1454996212}
+  Countdown: {fileID: 1454996214}
   GameOverUI: {fileID: 1938946187}
 --- !u!1 &1153500209
 GameObject:

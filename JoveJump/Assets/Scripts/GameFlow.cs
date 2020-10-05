@@ -1,5 +1,6 @@
 ﻿// Copyright Code Animo� (Laurens Mathot) � 2020, All rights reserved. Example project for 5th Planet Games
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace CodeAnimo
 {
@@ -9,7 +10,7 @@ namespace CodeAnimo
 		public GameObject Player;
 
 		public GameObject World;
-		public GameObject Countdown;
+		public PlayableDirector Countdown;
 		public GameObject GameOverUI;
 
 		private Transform _playerTransform;
@@ -34,7 +35,8 @@ namespace CodeAnimo
 			World.SetActive(false);
 			GameOverUI.SetActive(false);
 			World.SetActive(true);
-			Countdown.SetActive(true);
+			Countdown.gameObject.SetActive(true);
+			Countdown.Play();
 		}
 
 	}
