@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeAnimo
 {
-	public class TrackJumper : MonoBehaviour
+	public class PlayerFollower : MonoBehaviour
 	{
 		public Score ScoreKeeper;
 		public Transform DesiredPlatformLevel;
