@@ -10,12 +10,16 @@ namespace CodeAnimo
 		public int DesiredPlatformCount = 10;
 		public float MinimumHeightDifference = 5;
 		public float MaximumHeightDifference = 10;
+
+		public bool LimitHorizontalDifference = false;
+		public float MaximumHorizontalDifference = 3;
 		
 		public GameObject PlatformPrefab;
 		public Camera PlayerCamera;
 		private List<GameObject> Platforms;
 
-		private float _nextPlatformHeight;
+		private float _nextPlatformX;
+		private float _nextPlatformY;
 
 		private void OnEnable()
 		{
@@ -24,7 +28,7 @@ namespace CodeAnimo
 				Platforms = new List<GameObject>(DesiredPlatformCount);
 			}
 
-			_nextPlatformHeight = MinimumHeightDifference;
+			_nextPlatformY = MinimumHeightDifference;
 		}
 
 		private void OnDisable()
@@ -79,14 +83,29 @@ namespace CodeAnimo
 		private void PositionPlatform(Transform platformTransform)
 		{
 			Vector3 position = Vector3.zero;
-			position.x = Random.Range(0.0f, 1.0f);
-			position = PlayerCamera.ViewportToWorldPoint(position);
-			position.y = _nextPlatformHeight;
+			position.x = _nextPlatformX;
+			position.y = _nextPlatformY;
 			position.z = 0;
 
 			platformTransform.position = position;
 
-			_nextPlatformHeight += Random.Range(MinimumHeightDifference, MaximumHeightDifference);
+			_nextPlatformY += Random.Range(MinimumHeightDifference, MaximumHeightDifference);
+
+			// X coordinate takes viewport size into account:
+			_nextPlatformX = Random.Range(0.0f, 1.0f);
+			Vector3 viewportPosition = new Vector3(_nextPlatformX, 0, 0);
+			_nextPlatformX = PlayerCamera.ViewportToWorldPoint(viewportPosition).x;
+
+			// Limit distance to support uncommon aspect ratios:
+			if (LimitHorizontalDifference)
+			{
+				float distanceFromCurrentPlatform = _nextPlatformX - position.x;
+				if (Mathf.Abs(distanceFromCurrentPlatform) > MaximumHorizontalDifference)
+				{
+					_nextPlatformX = position.x + Mathf.Sign(distanceFromCurrentPlatform) * MaximumHorizontalDifference;
+				}
+			}
+			
 		}
 
 

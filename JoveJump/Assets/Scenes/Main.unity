@@ -6956,6 +6956,8 @@ MonoBehaviour:
   DesiredPlatformCount: 10
   MinimumHeightDifference: 1.5
   MaximumHeightDifference: 3
+  LimitHorizontalDifference: 1
+  MaximumHorizontalDifference: 3
   PlatformPrefab: {fileID: 3882308744515902583, guid: c3e219cfc29e76b4e9da36653181d416, type: 3}
   PlayerCamera: {fileID: 963194227}
 --- !u!1 &1454996212
