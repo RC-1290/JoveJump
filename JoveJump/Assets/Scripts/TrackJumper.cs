@@ -5,7 +5,7 @@ namespace CodeAnimo
 {
 	public class TrackJumper : MonoBehaviour
 	{
-		public AutomaticJump Jumper;
+		public Score ScoreKeeper;
 		public Transform DesiredPlatformLevel;
 		public float MoveDuration = 1;
 		public AnimationCurve MoveCurve;
@@ -40,12 +40,12 @@ namespace CodeAnimo
 
 		void Update()
 		{
-			if (Jumper.HeightReached > _trackedHeight)
+			if (ScoreKeeper.HeightReached > _trackedHeight)
 			{
 				_movingToNewHeight = true;
 				_moveStartTime = Time.time;
 				_startPosition = transform.position;
-				_trackedHeight = Jumper.HeightReached;
+				_trackedHeight = ScoreKeeper.HeightReached;
 
 				float offsetRequired = _trackedHeight - DesiredPlatformLevel.position.y;
 				_targetPosition = new Vector3(_startPosition.x, _startPosition.y + offsetRequired, _startPosition.z);

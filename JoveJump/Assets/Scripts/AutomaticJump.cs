@@ -16,7 +16,7 @@ namespace CodeAnimo
 		public Vector2 JumpForce;
 		public float ThrustDuration = .034f;
 
-		public float HeightReached = 0;
+		public Score ScoreKeeper;
 
 		private float _lastTimeAirborne = 0;
 		private Rigidbody2D _ownRigidBody;
@@ -28,7 +28,8 @@ namespace CodeAnimo
 		private void OnEnable()
 		{
 			_ownRigidBody = GetComponent<Rigidbody2D>();
-			HeightReached = 0;
+
+			ScoreKeeper.HeightReached = 0;
 			_lastTimeAirborne = 0;
 			_performingThrust = false;
 
@@ -49,9 +50,15 @@ namespace CodeAnimo
 				if (weHitSomething && notGoingUp)
 				{
 					float platformHeight = hit.point.y;
-					if (platformHeight > HeightReached)
+					if (platformHeight > ScoreKeeper.HeightReached)
 					{
-						HeightReached = platformHeight;
+						ScoreKeeper.HeightReached = platformHeight;
+
+						var jumpCounter = hit.collider.GetComponent<PlatformJumpCounter>();
+						if (jumpCounter != null)
+						{
+							jumpCounter.CountJump(ScoreKeeper);
+						}
 					}
 
 					if (Time.fixedTime - _lastTimeAirborne > TimeBeforeJump)

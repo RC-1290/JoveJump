@@ -6,9 +6,12 @@ namespace CodeAnimo
 {
 	public class Score : MonoBehaviour
 	{
-		public AutomaticJump Jumper;
 		public Text ScoreField;
 		public Text HighscoreField;
+		public Text PlatformCountField;
+
+		public int PlatformCount = 0;
+		public float HeightReached = 0;
 
 		[Tooltip("An arbitrary multiplier to avoid decimal places, while still showing enough detail.")]
 		public float Multiplier = 10;
@@ -20,11 +23,18 @@ namespace CodeAnimo
 		private float _animatedScore = 0;
 		private float _animatedHighscore = 0;
 		private float _highscore = 0;
+		private float _previousPlatformCount = 0;
 
 		private void OnEnable()
 		{
-			_animatedScore = 0;
+			PlatformCount = 0;
+			PlatformCountField.text = "0";
+			_previousPlatformCount = 0;
+
+			HeightReached = 0;
 			_currentScore = 0;
+			_animatedScore = 0;
+			
 			ScoreField.text = "0";
 
 			if (PlayerPrefs.HasKey(HighscoreKey))
@@ -52,7 +62,7 @@ namespace CodeAnimo
 
 		void Update()
 		{
-			_currentScore = Mathf.Floor(Jumper.HeightReached * Multiplier);
+			_currentScore = Mathf.Floor(HeightReached * Multiplier);
 
 			if (_currentScore > _highscore)
 			{
@@ -72,6 +82,12 @@ namespace CodeAnimo
 				_animatedHighscore += AnimationSpeed;
 				_animatedHighscore = _animatedHighscore > _highscore ? _highscore : _animatedHighscore;
 				HighscoreField.text = _animatedHighscore.ToString();
+			}
+
+			if (PlatformCount != _previousPlatformCount)
+			{
+				PlatformCountField.text = PlatformCount.ToString();
+				_previousPlatformCount = PlatformCount;
 			}
 		}
 	}

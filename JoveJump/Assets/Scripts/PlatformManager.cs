@@ -10,10 +10,9 @@ namespace CodeAnimo
 		public int DesiredPlatformCount = 10;
 		public float MinimumHeightDifference = 5;
 		public float MaximumHeightDifference = 10;
+		
 		public GameObject PlatformPrefab;
-
 		public Camera PlayerCamera;
-
 		private List<GameObject> Platforms;
 
 		private float _nextPlatformHeight;
@@ -46,6 +45,7 @@ namespace CodeAnimo
 				Platforms.Add(platform);
 
 				PositionPlatform(platform.transform);
+				EnsureItHasAJumpCounter(platform);
 			}
 
 
@@ -62,8 +62,17 @@ namespace CodeAnimo
 					else
 					{
 						PositionPlatform(platform.transform);
+						EnsureItHasAJumpCounter(platform);
 					}
 				}
+			}
+		}
+
+		private void EnsureItHasAJumpCounter(GameObject platform)
+		{
+			if (platform.GetComponent<PlatformJumpCounter>() == null)
+			{
+				platform.AddComponent<PlatformJumpCounter>();
 			}
 		}
 
