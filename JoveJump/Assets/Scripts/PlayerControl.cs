@@ -78,9 +78,6 @@ namespace CodeAnimo
 				goLeft	|= averageX < originalScreenPos.x;
 			}
 
-
-			bool includeChildren = true;
-
 			if (goRight)
 			{
 				_rigidBody.AddForceAtPosition(new Vector2(MoveForce, 0), ThrusterRight.position);
